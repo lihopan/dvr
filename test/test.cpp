@@ -152,9 +152,9 @@ int main(int argc, char *argv[])
 								cout << "Snap Fail." << endl;
 								//_getch();
 							}
-						}
+						}						
+						Sleep(3000);
 					}
-					Sleep(3000);
 					CLIENT_Logout(m_LoginID);
 					cout << "Client logout." << endl;
 				}
