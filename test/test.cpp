@@ -56,14 +56,46 @@ void CALLBACK SnapPicRet(LLONG ILoginID, BYTE *pBuf, UINT RevLen, UINT EncodeTyp
 	OnOnePicture(ILoginID,pBuf,RevLen,EncodeType,CmdSerial);
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char *argv[])
 {
+	string start_ip, end_ip;
+	if (argc < 3) {
+		start_ip.assign("0.0.0.0");
+		end_ip.assign("255.255.255.255");
+	} else {
+		start_ip.assign(argv[1]);
+		end_ip.assign(argv[2]);
+	}
+	int sa,sb,sc,sd, ea, eb, ec, ed;
+
+	sa = atoi(start_ip.substr(0,start_ip.find(".")).c_str());
+	start_ip = start_ip.substr(start_ip.find(".") + 1);
+
+	sb = atoi(start_ip.substr(0,start_ip.find(".")).c_str());
+	start_ip = start_ip.substr(start_ip.find(".") + 1);
+
+	sc = atoi(start_ip.substr(0,start_ip.find(".")).c_str());
+	start_ip = start_ip.substr(start_ip.find(".") + 1);
+
+	sd = atoi(start_ip.c_str());
+
+	ea = atoi(end_ip.substr(0,end_ip.find(".")).c_str());
+	end_ip = end_ip.substr(end_ip.find(".") + 1);
+
+	eb = atoi(end_ip.substr(0,end_ip.find(".")).c_str());
+	end_ip = end_ip.substr(end_ip.find(".") + 1);
+
+	ec = atoi(end_ip.substr(0,end_ip.find(".")).c_str());
+	end_ip = end_ip.substr(end_ip.find(".") + 1);
+
+	ed = atoi(end_ip.c_str());
+
 	NET_DEVICEINFO deviceInfo ={0};
 	unsigned long m_LoginID;
 	
 	BOOL ret = CLIENT_Init(DisConnectFunc,0); 
 
-	if(ret) {
+	if(ret) {	
 
 		CLIENT_SetSnapRevCallBack(SnapPicRet,0);	
 
@@ -72,10 +104,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "Init Fail." << endl;
 	}
 
-	for (int a = 0; a <= 255; a++){
-		for( int b = 0; b <= 255; b++){
-			for( int c = 0; c <= 255; c++){
-				for( int d = 0; d <= 255; d++){
+	for (int a = sa; a <= ea; a++){
+		for( int b = sb; b <= eb; b++){
+			for( int c = sc; c <= ec; c++){
+				for( int d = sd; d <= ed; d++){
 
 					ip.assign(int2str(a));
 					ip.append(".");
